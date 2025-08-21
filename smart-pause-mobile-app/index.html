@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🚗 Smart Pause & Resume - Urban Mobility App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-car-side"></i>
+            </div>
+            <h2>Smart Pause & Resume</h2>
+            <p>Revolutionary urban mobility</p>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-top">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">Welcome Back!</span>
+                        <span class="user-status">Ready to ride</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </button>
+                    <button class="header-btn" onclick="showSettings()">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for vehicles or locations..." id="searchInput">
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Map Section -->
+            <section id="mapSection" class="section active">
+                <div class="map-container">
+                    <div class="map-header">
+                        <h3><i class="fas fa-map-marked-alt"></i> Nearby Vehicles</h3>
+                        <div class="map-controls">
+                            <button class="map-btn" onclick="refreshMap()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button class="map-btn" onclick="centerMap()">
+                                <i class="fas fa-crosshairs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="map-placeholder">
+                        <div class="map-content">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h4>Interactive Map</h4>
+                            <p>Real-time vehicle locations and Smart Pause zones</p>
+                            <div class="vehicle-markers">
+                                <div class="vehicle-marker available" data-vehicle="V001" onclick="selectVehicle('V001')">
+                                    <i class="fas fa-car"></i>
+                                    <span>V001</span>
+                                    <div class="vehicle-info">
+                                        <span class="distance">50m away</span>
+                                        <span class="battery high">85%</span>
+                                    </div>
+                                </div>
+                                <div class="vehicle-marker available" data-vehicle="V002" onclick="selectVehicle('V002')">
+                                    <i class="fas fa-car"></i>
+                                    <span>V002</span>
+                                    <div class="vehicle-info">
+                                        <span class="distance">120m away</span>
+                                        <span class="battery medium">72%</span>
+                                    </div>
+                                </div>
+                                <div class="vehicle-marker available" data-vehicle="V003" onclick="selectVehicle('V003')">
+                                    <i class="fas fa-car"></i>
+                                    <span>V003</span>
+                                    <div class="vehicle-info">
+                                        <span class="distance">200m away</span>
+                                        <span class="battery high">91%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-btn primary" onclick="scanQRCode()">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Scan QR</span>
+                    </button>
+                    <button class="action-btn secondary" onclick="showRideHistory()">
+                        <i class="fas fa-history"></i>
+                        <span>History</span>
+                    </button>
+                    <button class="action-btn secondary" onclick="showSupport()">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Vehicle Selection Section -->
+            <section id="vehicleSection" class="section">
+                <div class="vehicle-details">
+                    <div class="vehicle-header">
+                        <button class="back-btn" onclick="backToMap()">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <h3 id="selectedVehicleId">Vehicle Details</h3>
+                    </div>
+                    
+                    <div class="vehicle-info-card">
+                        <div class="vehicle-image">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <div class="vehicle-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-battery-three-quarters"></i>
+                                <span id="vehicleBattery">85%</span>
+                                <span class="stat-label">Battery</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span id="vehicleLocation">Central Park</span>
+                                <span class="stat-label">Location</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="vehicleETA">2 min</span>
+                                <span class="stat-label">ETA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vehicle-actions">
+                        <button class="action-btn primary large" onclick="unlockVehicle()">
+                            <i class="fas fa-unlock"></i>
+                            <span>Unlock & Start Ride</span>
+                        </button>
+                        <button class="action-btn secondary" onclick="reserveVehicle()">
+                            <i class="fas fa-clock"></i>
+                            <span>Reserve (15 min)</span>
+                        </button>
+                    </div>
+
+                    <div class="vehicle-features">
+                        <h4>Smart Pause Features</h4>
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <i class="fas fa-pause-circle"></i>
+                                <span>10 min free pause</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-brain"></i>
+                                <span>AI motion detection</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Theft prevention</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Active Ride Section -->
+            <section id="activeRideSection" class="section">
+                <div class="ride-header">
+                    <h3><i class="fas fa-route"></i> Active Ride</h3>
+                    <div class="ride-timer" id="rideTimer">00:00</div>
+                </div>
+
+                <div class="ride-map">
+                    <div class="map-placeholder small">
+                        <div class="map-content">
+                            <i class="fas fa-route"></i>
+                            <h4>Live Route</h4>
+                            <p>Real-time navigation and tracking</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ride-controls">
+                    <div class="ride-info">
+                        <div class="info-item">
+                            <span class="label">Distance</span>
+                            <span class="value" id="rideDistance">0.0 km</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Cost</span>
+                            <span class="value" id="rideCost">€0.00</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Smart Pause</span>
+                            <span class="value" id="pauseStatus">Available</span>
+                        </div>
+                    </div>
+
+                    <div class="ride-actions">
+                        <button class="action-btn warning" onclick="pauseRide()" id="pauseBtn">
+                            <i class="fas fa-pause"></i>
+                            <span>Smart Pause</span>
+                        </button>
+                        <button class="action-btn danger" onclick="endRide()">
+                            <i class="fas fa-stop"></i>
+                            <span>End Ride</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="smart-pause-info">
+                    <h4><i class="fas fa-lightbulb"></i> Smart Pause Tips</h4>
+                    <ul>
+                        <li>Use Smart Pause for coffee breaks, shopping, or quick stops</li>
+                        <li>First 10 minutes are completely free</li>
+                        <li>After 10 minutes, you pay only 50% of normal rate</li>
+                        <li>Ride automatically resumes when motion is detected</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Ride History Section -->
+            <section id="historySection" class="section">
+                <div class="section-header">
+                    <h3><i class="fas fa-history"></i> Ride History</h3>
+                    <button class="filter-btn" onclick="showFilters()">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+
+                <div class="ride-list">
+                    <div class="ride-item" onclick="showRideDetails('R001')">
+                        <div class="ride-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="ride-info">
+                            <div class="ride-route">
+                                <span class="start">Central Park</span>
+                                <i class="fas fa-arrow-right"></i>
+                                <span class="end">Coffee Shop</span>
+                            </div>
+                            <div class="ride-details">
+                                <span class="date">Today, 2:30 PM</span>
+                                <span class="duration">23 min</span>
+                                <span class="cost">€4.50</span>
+                            </div>
+                            <div class="ride-stats">
+                                <span class="distance">2.1 km</span>
+                                <span class="smart-pause">2 pauses (€1.20 saved)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ride-item" onclick="showRideDetails('R002')">
+                        <div class="ride-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="ride-info">
+                            <div class="ride-route">
+                                <span class="start">Station A</span>
+                                <i class="fas fa-arrow-right"></i>
+                                <span class="end">Office Building</span>
+                            </div>
+                            <div class="ride-details">
+                                <span class="date">Yesterday, 9:15 AM</span>
+                                <span class="duration">18 min</span>
+                                <span class="cost">€3.80</span>
+                            </div>
+                            <div class="ride-stats">
+                                <span class="distance">1.8 km</span>
+                                <span class="smart-pause">1 pause (€0.60 saved)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profileSection" class="section">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 id="userName">John Doe</h3>
+                    <p id="userEmail">john.doe@email.com</p>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalRides">24</div>
+                        <div class="stat-label">Total Rides</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalDistance">156.7</div>
+                        <div class="stat-label">Km Traveled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="smartPauseSavings">€28.50</div>
+                        <div class="stat-label">Smart Pause Savings</div>
+                    </div>
+                </div>
+
+                <div class="profile-menu">
+                    <div class="menu-item" onclick="showPaymentMethods()">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Payment Methods</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="menu-item" onclick="showKYCVerification()">
+                        <i class="fas fa-id-card"></i>
+                        <span>KYC Verification</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="menu-item" onclick="showPrivacySettings()">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Privacy & Security</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="menu-item" onclick="showSupport()">
+                        <i class="fas fa-headset"></i>
+                        <span>Help & Support</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="menu-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showSection('mapSection')">
+                <i class="fas fa-map"></i>
+                <span>Map</span>
+            </button>
+            <button class="nav-item" onclick="showSection('historySection')">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </button>
+            <button class="nav-item" onclick="showSection('profileSection')">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+        </nav>
+
+        <!-- Floating Action Button -->
+        <button class="fab" onclick="showQuickActions()" id="fab">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- Modals -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Scan QR Code</h3>
+                <button class="close-btn" onclick="closeModal('qrModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="qr-scanner">
+                    <i class="fas fa-qrcode"></i>
+                    <p>Point camera at vehicle QR code</p>
+                    <button class="action-btn primary" onclick="simulateQRScan()">
+                        <i class="fas fa-camera"></i>
+                        <span>Scan QR Code</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Notifications</h3>
+                <button class="close-btn" onclick="closeModal('notificationModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="notification-list">
+                    <div class="notification-item">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="notification-content">
+                            <span class="notification-title">Welcome to Smart Pause!</span>
+                            <span class="notification-message">Enjoy 10 minutes of free pause time on every ride.</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="notification-content">
+                            <span class="notification-title">KYC Verification Complete</span>
+                            <span class="notification-message">Your identity has been verified successfully.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="close-btn" onclick="closeModal('settingsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <span>Smart Pause Notifications</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Location Services</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Dark Mode</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

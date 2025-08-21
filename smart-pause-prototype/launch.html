@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Launch Smart Pause & Resume Prototype</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        
+        .launch-container {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #2196f3;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: #2196f3;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .launch-btn {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .launch-btn:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+        }
+        
+        .features {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: #b0b0b0;
+        }
+        
+        .feature i {
+            color: #4caf50;
+            width: 20px;
+        }
+        
+        .countdown {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="launch-container">
+        <div class="logo">🚀</div>
+        <h1>Smart Pause & Resume</h1>
+        <p>EIC Accelerator Prototype - €2.5M Deep-Tech Funding Program</p>
+        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">📧 cinque.diecidue@gmail.com | 📅 2025</p>
+        
+        <a href="index.html" class="launch-btn">
+            🚀 Launch Prototype
+        </a>
+        
+        <div class="features">
+            <div class="feature">
+                <i>✅</i>
+                <span>Complete UI demonstration</span>
+            </div>
+            <div class="feature">
+                <i>✅</i>
+                <span>EIC Demo mode (60s showcase)</span>
+            </div>
+            <div class="feature">
+                <i>✅</i>
+                <span>Interactive fleet management</span>
+            </div>
+            <div class="feature">
+                <i>✅</i>
+                <span>Real-time analytics</span>
+            </div>
+            <div class="feature">
+                <i>✅</i>
+                <span>EU compliance features</span>
+            </div>
+        </div>
+        
+        <div class="countdown">
+            Ready to revolutionize urban mobility! 🌍
+        </div>
+    </div>
+    
+    <script>
+        // Auto-launch after 3 seconds
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 3000);
+        
+        // Countdown display
+        let countdown = 3;
+        const countdownElement = document.querySelector('.countdown');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+                countdownElement.textContent = `Auto-launching in ${countdown} seconds... 🚀`;
+            } else {
+                countdownElement.textContent = 'Launching now... 🚀';
+                clearInterval(timer);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

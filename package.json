@@ -1,0 +1,54 @@
+{
+  "name": "smart-mobility-mvp",
+  "version": "1.0.0",
+  "description": "Smart Pause & Resume Vehicle Sharing Platform MVP for EIC Accelerator",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run dashboard:dev\" \"npm run simulator:dev\"",
+    "backend:dev": "cd backend && npm run dev",
+    "dashboard:dev": "cd frontend/operator-dashboard && npm run dev",
+    "simulator:dev": "cd vehicle-simulator && npm run dev",
+    "mobile:dev": "cd frontend/mobile-app && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend/operator-dashboard && npm install && cd ../mobile-app && npm install && cd ../../vehicle-simulator && npm install",
+    "build": "npm run build:backend && npm run build:dashboard && npm run build:mobile",
+    "build:backend": "cd backend && npm run build",
+    "build:dashboard": "cd frontend/operator-dashboard && npm run build",
+    "build:mobile": "cd frontend/mobile-app && npm run build",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend/operator-dashboard && npm test",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "db:migrate": "cd database && npm run migrate",
+    "db:seed": "cd database && npm run seed",
+    "simulator": "cd vehicle-simulator && npm start",
+    "eic:demo": "npm run simulator:dev & npm run dashboard:dev & npm run mobile:dev"
+  },
+  "keywords": [
+    "mobility",
+    "vehicle-sharing",
+    "smart-pause",
+    "motion-detection",
+    "eic-accelerator",
+    "deep-tech",
+    "ml",
+    "real-time"
+  ],
+  "author": "Smart Mobility Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smart-mobility/eic-accelerator-mvp.git"
+  }
+}

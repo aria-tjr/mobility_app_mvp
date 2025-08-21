@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Smart Pause & Resume - EIC Accelerator Prototype</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-car-side"></i>
+                <span>Smart Pause & Resume</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#fleet" class="nav-link">Fleet</a>
+                <a href="#eic-demo" class="nav-link">EIC Demo</a>
+                <a href="#analytics" class="nav-link">Analytics</a>
+                <a href="#settings" class="nav-link">Settings</a>
+            </div>
+            <div class="nav-status">
+                <span class="status-indicator connected"></span>
+                <span class="status-text">Connected</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="section-header">
+                <h1><i class="fas fa-tachometer-alt"></i> Fleet Dashboard</h1>
+                <p>Real-time monitoring of your Smart Mobility fleet with Smart Pause innovation</p>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Total Vehicles</h3>
+                        <div class="card-value">24</div>
+                        <div class="card-subtitle">In fleet</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon active">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Active Rides</h3>
+                        <div class="card-value">8</div>
+                        <div class="card-subtitle">Currently in progress</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon warning">
+                        <i class="fas fa-pause"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Smart Pause</h3>
+                        <div class="card-value">3</div>
+                        <div class="card-subtitle">Cost-saving pauses</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon success">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Revenue Today</h3>
+                        <div class="card-value">€1,247</div>
+                        <div class="card-subtitle">Smart Pause optimized</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Fleet Map -->
+            <div class="map-container">
+                <div class="map-header">
+                    <h3><i class="fas fa-map-marked-alt"></i> Live Fleet Map</h3>
+                    <div class="map-controls">
+                        <button class="btn btn-primary" onclick="refreshMap()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h4>Interactive Fleet Map</h4>
+                        <p>Real-time vehicle locations and Smart Pause zones</p>
+                        <div class="vehicle-markers">
+                            <div class="vehicle-marker active" data-vehicle="V001">
+                                <i class="fas fa-car"></i>
+                                <span>V001</span>
+                            </div>
+                            <div class="vehicle-marker paused" data-vehicle="V002">
+                                <i class="fas fa-pause"></i>
+                                <span>V002</span>
+                            </div>
+                            <div class="vehicle-marker available" data-vehicle="V003">
+                                <i class="fas fa-car"></i>
+                                <span>V003</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fleet Management Section -->
+        <section id="fleet" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-car-side"></i> Fleet Management</h1>
+                <p>Monitor and manage your vehicle fleet with Smart Pause capabilities</p>
+            </div>
+
+            <div class="fleet-controls">
+                <button class="btn btn-success" onclick="addVehicle()">
+                    <i class="fas fa-plus"></i> Add Vehicle
+                </button>
+                <button class="btn btn-info" onclick="refreshFleet()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+
+            <div class="fleet-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vehicle ID</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Battery</th>
+                            <th>Smart Pause</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>V001</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>Central Park</td>
+                            <td><div class="battery-indicator high">85%</div></td>
+                            <td><span class="pause-status available">Available</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="pauseVehicle('V001')">
+                                    <i class="fas fa-pause"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>V002</td>
+                            <td><span class="status-badge paused">Paused</span></td>
+                            <td>Coffee Shop</td>
+                            <td><div class="battery-indicator medium">72%</div></td>
+                            <td><span class="pause-status active">Active (5:23)</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-success" onclick="resumeVehicle('V002')">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>V003</td>
+                            <td><span class="status-badge available">Available</span></td>
+                            <td>Station A</td>
+                            <td><div class="battery-indicator high">91%</div></td>
+                            <td><span class="pause-status available">Available</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="reserveVehicle('V003')">
+                                    <i class="fas fa-lock"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- EIC Demo Section -->
+        <section id="eic-demo" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-rocket"></i> EIC Accelerator Demo</h1>
+                <p>60-second innovation showcase for €2.5M Deep-Tech funding program</p>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-header">
+                    <div class="demo-status">
+                        <span class="demo-indicator" id="demoStatus">Ready</span>
+                    </div>
+                    <div class="demo-controls">
+                        <button class="btn btn-success" onclick="startDemo()" id="startBtn">
+                            <i class="fas fa-play"></i> Start Demo
+                        </button>
+                        <button class="btn btn-warning" onclick="pauseDemo()" id="pauseBtn" disabled>
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="btn btn-danger" onclick="stopDemo()" id="stopBtn" disabled>
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                    </div>
+                </div>
+
+                <div class="demo-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressText">0:00 / 1:00</span>
+                    </div>
+                </div>
+
+                <div class="demo-steps">
+                    <div class="step" data-step="1">
+                        <div class="step-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Demo Start</h4>
+                            <p>Vehicle discovery & reservation</p>
+                            <div class="step-status" id="step1Status">Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="step" data-step="2">
+                        <div class="step-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Ride Initiation</h4>
+                            <p>User starts journey</p>
+                            <div class="step-status" id="step2Status">Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="step" data-step="3">
+                        <div class="step-icon">
+                            <i class="fas fa-pause"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Smart Pause</h4>
+                            <p>User stops for coffee (legitimate pause)</p>
+                            <div class="step-status" id="step3Status">Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="step" data-step="4">
+                        <div class="step-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Motion Detection</h4>
+                            <p>AI analyzes movement patterns</p>
+                            <div class="step-status" id="step4Status">Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="step" data-step="5">
+                        <div class="step-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Auto-Resume</h4>
+                            <p>Motion detected, ride continues</p>
+                            <div class="step-status" id="step5Status">Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="step" data-step="6">
+                        <div class="step-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Security Demo</h4>
+                            <p>Unauthorized movement detection</p>
+                            <div class="step-status" id="step6Status">Pending</div>
+                        </div>
+                    </div>
+
+                    <div class="step" data-step="7">
+                        <div class="step-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="step-content">
+                            <h4>Demo Complete</h4>
+                            <p>Innovation summary & metrics</p>
+                            <div class="step-status" id="step7Status">Pending</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-metrics">
+                    <div class="metric-card">
+                        <h4>Smart Pause Efficiency</h4>
+                        <div class="metric-value">95%</div>
+                        <div class="metric-description">Cost savings achieved</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Motion Detection</h4>
+                        <div class="metric-value">87%</div>
+                        <div class="metric-description">Pattern recognition accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Security Score</h4>
+                        <div class="metric-value">A+</div>
+                        <div class="metric-description">Theft prevention rating</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-chart-line"></i> Analytics & Insights</h1>
+                <p>Performance metrics and business intelligence for your Smart Mobility platform</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="chart-container">
+                    <h3>Smart Pause Usage Over Time</h3>
+                    <div class="chart-placeholder">
+                        <div class="chart-content">
+                            <i class="fas fa-chart-area"></i>
+                            <h4>Usage Analytics</h4>
+                            <p>Smart Pause adoption and efficiency metrics</p>
+                            <div class="chart-data">
+                                <div class="data-point">
+                                    <span class="data-label">Today</span>
+                                    <span class="data-value">24 pauses</span>
+                                </div>
+                                <div class="data-point">
+                                    <span class="data-label">This Week</span>
+                                    <span class="data-value">156 pauses</span>
+                                </div>
+                                <div class="data-point">
+                                    <span class="data-label">Cost Savings</span>
+                                    <span class="data-value">€2,847</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Fleet Utilization</h3>
+                    <div class="chart-placeholder">
+                        <div class="chart-content">
+                            <i class="fas fa-chart-pie"></i>
+                            <h4>Utilization Metrics</h4>
+                            <p>Vehicle usage patterns and efficiency</p>
+                            <div class="utilization-stats">
+                                <div class="util-stat">
+                                    <span class="stat-label">Peak Hours</span>
+                                    <span class="stat-value">8-10 AM, 5-7 PM</span>
+                                </div>
+                                <div class="util-stat">
+                                    <span class="stat-label">Average Trip</span>
+                                    <span class="stat-value">23 minutes</span>
+                                </div>
+                                <div class="util-stat">
+                                    <span class="stat-label">Efficiency</span>
+                                    <span class="stat-value">89%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="section">
+            <div class="section-header">
+                <h1><i class="fas fa-cog"></i> Platform Settings</h1>
+                <p>Configure your Smart Mobility platform settings and preferences</p>
+            </div>
+
+            <div class="settings-container">
+                <div class="settings-group">
+                    <h3>Smart Pause Configuration</h3>
+                    <div class="setting-item">
+                        <label>Maximum Pause Duration</label>
+                        <input type="number" value="10" min="1" max="30"> minutes
+                    </div>
+                    <div class="setting-item">
+                        <label>Idle Half Rate</label>
+                        <input type="checkbox" checked> Enable 50% billing at 0 km/h
+                    </div>
+                    <div class="setting-item">
+                        <label>Motion Detection Sensitivity</label>
+                        <select>
+                            <option>Low</option>
+                            <option selected>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Security Settings</h3>
+                    <div class="setting-item">
+                        <label>Theft Detection</label>
+                        <input type="checkbox" checked> Enable real-time monitoring
+                    </div>
+                    <div class="setting-item">
+                        <label>Alert Threshold</label>
+                        <input type="number" value="5" min="1" max="10"> unauthorized movements
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>EU Compliance</h3>
+                    <div class="setting-item">
+                        <label>GDPR Compliance</label>
+                        <input type="checkbox" checked> Enable data protection
+                    </div>
+                    <div class="setting-item">
+                        <label>KYC Verification</label>
+                        <input type="checkbox" checked> Require identity verification
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Smart Pause & Resume</h4>
+                <p>Revolutionary motion-recognition system for urban mobility</p>
+            </div>
+            <div class="footer-section">
+                <h4>EIC Accelerator</h4>
+                <p>€2.5M Deep-Tech Funding Program</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>cinque.diecidue@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Smart Pause Mobility Solutions. EIC Accelerator Innovation Project.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
