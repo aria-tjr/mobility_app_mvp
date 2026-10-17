@@ -1,6 +1,6 @@
 # Mobility App MVP — Smart Urban Vehicle Sharing Platform
 
-A full-stack smart vehicle sharing platform developed as part of an **EIC Accelerator €2.5M grant project**. Designed to optimize last-mile urban mobility through real-time fleet management, ML-powered demand prediction, and seamless mobile UX.
+A full-stack smart vehicle sharing platform developed as part of an **EIC Accelerator €2.5M grant project**. Designed to optimize last-mile urban mobility through real-time fleet management, a vehicle simulator, and a mobile web prototype.
 
 ## Project Context
 
@@ -8,9 +8,9 @@ This MVP was built for an EIC (European Innovation Council) Accelerator applicat
 
 ## Features
 
-- **Mobile App** (React Native / Expo) — Cross-platform iOS/Android user interface for vehicle discovery, booking, and payments
+- **Mobile Web Prototype** (HTML/JS PWA in `smart-pause-mobile-app/`) — vehicle discovery and booking UI prototype
 - **Backend API** (Node.js + Express) — RESTful microservices for fleet management, user auth, and booking logic
-- **ML Demand Prediction** (Python/FastAPI) — Time-series forecasting for vehicle redistribution optimization
+- **Motion-detection service stub** (Python/FastAPI in `backend/motion-detection/`) — health/root endpoints only; ML demand prediction is **planned, not implemented**
 - **Real-time Fleet Tracking** — GPS-based vehicle location and availability updates
 - **Payment Integration** — Stripe payment processing for rides and subscriptions
 - **Admin Dashboard** — Operator dashboard for fleet management and analytics
@@ -19,9 +19,10 @@ This MVP was built for an EIC (European Innovation Council) Accelerator applicat
 
 | Layer | Technology |
 |-------|-----------|
-| Mobile Frontend | React Native, Expo |
+| Mobile Frontend | HTML/CSS/JS PWA prototype |
+| Operator Dashboard | React, Leaflet, Recharts |
 | Backend API | Node.js, Express.js |
-| ML Service | Python, FastAPI, scikit-learn |
+| Python Service | FastAPI (motion-detection stub) |
 | Database | PostgreSQL, Redis |
 | Payments | Stripe API |
 | Maps | Google Maps API |
@@ -31,7 +32,7 @@ This MVP was built for an EIC (European Innovation Council) Accelerator applicat
 ## Architecture
 
 ```
-React Native App
+Mobile web prototype / Operator dashboard (React)
       ↓
 Node.js API Gateway
   ├── Auth Service
@@ -39,7 +40,7 @@ Node.js API Gateway
   ├── Booking Engine
   └── Payment Service
       ↓
-Python ML Service (Demand Prediction)
+Python motion-detection service (stub; ML demand prediction planned)
       ↓
 PostgreSQL + Redis
 ```
@@ -47,16 +48,16 @@ PostgreSQL + Redis
 ## Getting Started
 
 1. **Clone** the repository
-2. **Environment** — Copy `.env.example` to `.env` and configure:
+2. **Environment** — Copy `.env.example` to `backend/.env` and `vehicle-simulator/.env` and configure:
    - Database connection strings
    - JWT secret
    - Stripe API keys (use test keys for development)
-   - Google Maps API key
 3. **Install** dependencies:
    ```bash
    cd backend && npm install
-   cd mobile && npm install
-   cd ml-service && pip install -r requirements.txt
+   cd ../vehicle-simulator && npm install
+   cd ../frontend/operator-dashboard && npm install
+   pip install -r ../../backend/motion-detection/requirements.txt
    ```
 4. **Run** with Docker Compose:
    ```bash
@@ -69,4 +70,4 @@ This platform was developed as part of an EIC Accelerator Phase 1 application, d
 
 ## License
 
-MIT License
+MIT — see [LICENSE.md](LICENSE.md).

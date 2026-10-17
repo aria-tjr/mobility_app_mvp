@@ -236,21 +236,22 @@ setup_dev_environment() {
     
     # Create .env files if they don't exist
     if [ ! -f .env ]; then
+        DB_PASSWORD="${DB_PASSWORD:-$(openssl rand -hex 16)}"
         cat > .env << EOF
 # Smart Mobility MVP Environment Configuration
 NODE_ENV=development
 PORT=3000
 
 # Database
-DATABASE_URL=postgresql://mobility_user:mobility_pass_2024@localhost:5432/smart_mobility
+DATABASE_URL=postgresql://mobility_user:${DB_PASSWORD}@localhost:5432/smart_mobility
 REDIS_URL=redis://localhost:6379
 
 # JWT
-JWT_SECRET=eic_accelerator_jwt_secret_2024
+JWT_SECRET=$(openssl rand -hex 32)
 
 # Stripe (Test Mode)
-STRIPE_SECRET_KEY=sk_test_51ABC123DEF456GHI789JKL
-STRIPE_PUBLISHABLE_KEY=pk_test_51ABC123DEF456GHI789JKL
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
 
 # Frontend URLs
 FRONTEND_URL=http://localhost:3003
@@ -313,7 +314,7 @@ display_instructions() {
     echo "   3. Watch the Smart Pause & Resume system in action"
     echo ""
     echo "🔒 Default credentials:"
-    echo "   Database: mobility_user / mobility_pass_2024"
+    echo "   Database: mobility_user / (password: see DATABASE_URL in .env)"
     echo "   Stripe: Test mode (use test card numbers)"
     echo ""
     echo "📚 Documentation:"

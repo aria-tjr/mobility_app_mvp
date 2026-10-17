@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_DB: smart_mobility
       POSTGRES_USER: mobility_user
-      POSTGRES_PASSWORD: mobility_pass_2024
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
     ports:
       - "5434:5432"
     volumes:
@@ -38,10 +38,10 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: development
-      DATABASE_URL: postgresql://mobility_user:mobility_pass_2024@postgres:5432/smart_mobility
+      DATABASE_URL: postgresql://mobility_user:${POSTGRES_PASSWORD}@postgres:5432/smart_mobility
       REDIS_URL: redis://redis:6379
-      JWT_SECRET: eic_accelerator_jwt_secret_2024
-      STRIPE_SECRET_KEY: sk_test_51ABC123DEF456GHI789JKL
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
     depends_on:
       - postgres
       - redis
