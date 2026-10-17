@@ -40,8 +40,8 @@ services:
       NODE_ENV: development
       DATABASE_URL: postgresql://mobility_user:mobility_pass_2024@postgres:5432/smart_mobility
       REDIS_URL: redis://redis:6379
-      JWT_SECRET: eic_accelerator_jwt_secret_2024
-      STRIPE_SECRET_KEY: sk_test_51ABC123DEF456GHI789JKL
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
     depends_on:
       - postgres
       - redis

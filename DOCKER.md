@@ -102,10 +102,10 @@ POSTGRES_PASSWORD=mobility_pass_2024
 REDIS_URL=redis://redis:6379
 
 # JWT Configuration
-JWT_SECRET=eic_accelerator_jwt_secret_2024
+JWT_SECRET=<generate-a-long-random-secret>
 
 # Stripe Configuration
-STRIPE_SECRET_KEY=sk_test_51ABC123DEF456GHI789JKL
+STRIPE_SECRET_KEY=<your-stripe-test-secret-key>
 
 # Service URLs
 API_GATEWAY_URL=http://api-gateway:3000
