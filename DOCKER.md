@@ -96,7 +96,7 @@ curl http://localhost:3001/health
 # Database Configuration
 POSTGRES_DB=smart_mobility
 POSTGRES_USER=mobility_user
-POSTGRES_PASSWORD=mobility_pass_2024
+POSTGRES_PASSWORD=change-me
 
 # Redis Configuration
 REDIS_URL=redis://redis:6379
