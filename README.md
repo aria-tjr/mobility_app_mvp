@@ -1,10 +1,6 @@
 # Mobility App MVP — Smart Urban Vehicle Sharing Platform
 
-A full-stack smart vehicle sharing platform developed as part of an **EIC Accelerator €2.5M grant project**. Designed to optimize last-mile urban mobility through real-time fleet management, a vehicle simulator, and a mobile web prototype.
-
-## Project Context
-
-This MVP was built for an EIC (European Innovation Council) Accelerator application — Europe's flagship innovation program supporting high-potential startups. The platform demonstrates a viable product for the grant evaluation process.
+A full-stack smart vehicle sharing platform. Designed to optimize last-mile urban mobility through real-time fleet management, a vehicle simulator, and a mobile web prototype.
 
 ## Features
 
@@ -63,10 +59,6 @@ PostgreSQL + Redis
    ```bash
    docker-compose up --build
    ```
-
-## Grant Context
-
-This platform was developed as part of an EIC Accelerator Phase 1 application, demonstrating technical feasibility for a next-generation urban mobility solution targeting European smart city markets.
 
 ## License
 
